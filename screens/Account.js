@@ -1,32 +1,24 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
+import {accountStyles} from '../styles/AccountStyles'
 
 const Account = () => {
   return (
     <View>
       <Image
-        source={{
-          uri: "https://www.xtrafondos.com/wallpapers/paisaje-digital-en-atardecer-5846.jpg",
-        }}
-        style={styles.logo}
+        style={accountStyles.logo}
+        source={require("../assets/Depth 2, Frame 0.png")}
       />
-      <Text>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente
-        dignissimos saepe vero pariatur, quo aspernatur deleniti molestiae, a
-        quia, debitis inventore. Nulla animi molestias non voluptate dolores
-        unde cumque voluptas commodi ipsam sit sint aliquam, modi atque iste
-        nam! Consequuntur perspiciatis omnis facilis fugiat nam in consequatur
-        vel quo dolor.
-      </Text>
+      <Text>Bienvenido a AndarieGo</Text>
+      <Text>Descubra el corazón de Honduras a través de auténticas experiencias culturales.</Text>
+      <TouchableOpacity>
+        <Text>Registrate</Text>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <Text>Inicia Sesion</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 export default Account;
-
-const styles = StyleSheet.create({
-  logo: {
-    height: 250,
-    width: 395,
-  },
-});
