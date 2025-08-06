@@ -1,9 +1,19 @@
 import { StyleSheet } from "react-native";
+import { useFonts } from "expo-font";
 
-export const accountStyles = StyleSheet.create({
+export const signUpStyles = StyleSheet.create({
+  TxtTest:{
+    fontSize: 30,
+    fontFamily: 'Spartan-Regular',
+  },
+  cntLogo: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
   logo: {
-    height: 300,
-    width: 395,
+    height: 110,
+    width: 300,
+    aspectRatio: 16 / 9,
   },
   RgtBtn: {
     backgroundColor: "#00B04F",
@@ -12,17 +22,9 @@ export const accountStyles = StyleSheet.create({
     marginTop: 30,
     borderRadius: 50,
   },
-  LogBtn: {
-    backgroundColor: "#dfdfdfff",
-    padding: 10,
-    width: 350,
-    margin: 15,
-    borderRadius: 50,
-  },
   TxtBase: {
     fontSize: 20,
     alignSelf: "center",
-    fontFamily: 'Spartan-Medium'
   },
   TxtRgtBtn: {
     color: "white",
@@ -38,13 +40,12 @@ export const accountStyles = StyleSheet.create({
   },
   TxtBold: {
     fontSize: 30,
+    fontWeight: "bold",
     margin: 20,
-    fontFamily: 'Spartan-Bold',
   },
   TxtDesc: {
     fontSize: 18,
     margin: 15,
     textAlign: "center",
-    fontFamily: "Spartan-Regular",
   },
 });

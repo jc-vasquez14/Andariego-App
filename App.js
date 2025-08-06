@@ -1,38 +1,25 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Home from './screens/Home';
-import Account from './screens/Account';
-import Itinerary from './screens/Itinerary';
+import 'react-native-gesture-handler'
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Login from './screens/Login';
+import SignUp from './screens/Sign-up';
+import MainTabs from './screens/MainTabs'; // <- Aquí están tus tabs
+import CulturalInterestsScreen from './screens/CulturalInterestsScreen';
+import SignIn from './screens/Sign-in'
 
-
-function SecondScreen() {
-  return(
-    <View style={AppStyles.container}>
-      <Text> This is Second Screen </Text>
-    </View>
-  )
-}
-
-const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 export default function App() {
-  return(
+  return (
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name='Home' component={Home} />
-        <Tab.Screen name='Itinerary' component={Itinerary} />
-        <Tab.Screen name='Account' component={Account} />
-      </Tab.Navigator>
+      <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="SignIn" component={SignIn} />
+        <Stack.Screen name="MainTabs" component={MainTabs} />
+        <Stack.Screen name="CulturalInterests" component={CulturalInterestsScreen} />
+      </Stack.Navigator>
     </NavigationContainer>
-  )
+  );
 }
-
-const AppStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

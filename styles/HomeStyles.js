@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const accountStyles = StyleSheet.create({
+export const homeStyles = StyleSheet.create({
   logo: {
     height: 300,
     width: 395,
@@ -22,7 +22,6 @@ export const accountStyles = StyleSheet.create({
   TxtBase: {
     fontSize: 20,
     alignSelf: "center",
-    fontFamily: 'Spartan-Medium'
   },
   TxtRgtBtn: {
     color: "white",
@@ -38,13 +37,12 @@ export const accountStyles = StyleSheet.create({
   },
   TxtBold: {
     fontSize: 30,
+    fontWeight: "bold",
     margin: 20,
-    fontFamily: 'Spartan-Bold',
   },
   TxtDesc: {
     fontSize: 18,
-    margin: 15,
-    textAlign: "center",
-    fontFamily: "Spartan-Regular",
+    margin:15,
+    textAlign: 'center'
   },
 });
