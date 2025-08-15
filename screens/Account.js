@@ -8,14 +8,15 @@ import {
 } from 'react-native';
 
 const Account = () => {
-  // Datos simulados del usuario y experiencias
+  // Datos simulados del usuario
   const user = {
     nombre: 'Marío López',
     email: 'mario.lopez@example.com',
     telefono: '+504 1234-5678',
-    imagenPerfil: require('../assets/perfil.jpg'), // cambia por la ruta de tu imagen
+    imagenPerfil: require('../assets/perfil.jpg'),
   };
 
+  // Experiencias realizadas
   const experienciasRealizadas = [
     {
       id: 1,
@@ -33,8 +34,8 @@ const Account = () => {
 
   return (
     <ScrollView style={styles.container}>
-      {/* Perfil */}
-      <View style={styles.profileContainer}>
+      {/* Encabezado de perfil */}
+      <View style={styles.header}>
         <Image source={user.imagenPerfil} style={styles.profileImage} />
         <Text style={styles.profileName}>{user.nombre}</Text>
         <Text style={styles.profileEmail}>{user.email}</Text>
@@ -42,16 +43,18 @@ const Account = () => {
       </View>
 
       {/* Experiencias realizadas */}
-      <Text style={styles.sectionTitle}>Experiencias realizadas</Text>
-      {experienciasRealizadas.map(exp => (
-        <View key={exp.id} style={styles.experienceCard}>
-          <Image source={exp.imagen} style={styles.experienceImage} />
-          <View style={styles.experienceInfo}>
-            <Text style={styles.experienceName}>{exp.nombre}</Text>
-            <Text style={styles.experienceDate}>Fecha: {exp.fecha}</Text>
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Experiencias realizadas</Text>
+        {experienciasRealizadas.map(exp => (
+          <View key={exp.id} style={styles.experienceCard}>
+            <Image source={exp.imagen} style={styles.experienceImage} />
+            <View style={styles.experienceInfo}>
+              <Text style={styles.experienceName}>{exp.nombre}</Text>
+              <Text style={styles.experienceDate}>Fecha: {exp.fecha}</Text>
+            </View>
           </View>
-        </View>
-      ))}
+        ))}
+      </View>
     </ScrollView>
   );
 };
@@ -61,33 +64,42 @@ export default Account;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    padding: 20,
+    backgroundColor: '#f7f8fa',
   },
-  profileContainer: {
+  header: {
+    backgroundColor: '#4CAF50',
     alignItems: 'center',
-    marginBottom: 30,
+    paddingVertical: 30,
+    paddingHorizontal: 20,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    elevation: 4,
   },
   profileImage: {
     width: 110,
     height: 110,
     borderRadius: 55,
-    marginBottom: 15,
+    marginBottom: 12,
+    borderWidth: 3,
+    borderColor: '#fff',
   },
   profileName: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#000',
+    color: '#fff',
   },
   profileEmail: {
     fontSize: 16,
-    color: '#666',
+    color: '#e8f5e9',
     marginTop: 4,
   },
   profilePhone: {
     fontSize: 16,
-    color: '#666',
+    color: '#e8f5e9',
     marginTop: 2,
+  },
+  section: {
+    padding: 20,
   },
   sectionTitle: {
     fontSize: 20,
@@ -97,11 +109,12 @@ const styles = StyleSheet.create({
   },
   experienceCard: {
     flexDirection: 'row',
-    backgroundColor: '#f9f9f9',
-    borderRadius: 10,
+    backgroundColor: '#fff',
+    borderRadius: 12,
     marginBottom: 15,
     padding: 10,
     alignItems: 'center',
+    elevation: 3,
   },
   experienceImage: {
     width: 80,
@@ -119,7 +132,7 @@ const styles = StyleSheet.create({
   },
   experienceDate: {
     fontSize: 14,
-    color: '#555',
+    color: '#777',
     marginTop: 4,
   },
 });
