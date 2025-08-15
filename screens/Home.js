@@ -32,7 +32,7 @@ const Home = ({ navigation }) => {
       nombre: "La Tigra",
       descripcion: "Una reserva natural con senderos y biodiversidad.",
       imagen: require("../assets/Latigra.jpg"),
-      precio: 30,
+      precio: 300,
       ubicacion: "Tegucigalpa",
       categoria: "Naturaleza",
     },
@@ -41,7 +41,7 @@ const Home = ({ navigation }) => {
       nombre: "Pulhapanzak",
       descripcion: "Una cascada impresionante en el norte de Honduras.",
       imagen: require("../assets/pulhapanzak.jpg"),
-      precio: 25,
+      precio: 500,
       ubicacion: "San Buenaventura",
       categoria: "Aventura",
     },
@@ -50,7 +50,7 @@ const Home = ({ navigation }) => {
       nombre: "Utila",
       descripcion: "Una isla paradisíaca ideal para buceo.",
       imagen: require("../assets/utila.jpg"),
-      precio: 50,
+      precio: 1000,
       ubicacion: "Islas de la Bahía",
       categoria: "Cultura",
     },
@@ -58,7 +58,7 @@ const Home = ({ navigation }) => {
       id: 4,
       nombre: "Roatán",
       descripcion: "Playas de arena blanca y aguas cristalinas.",
-      imagen: require("../assets/roatan.jpg"),
+      imagen: require("../assets/utila.jpg"),
       precio: 60,
       ubicacion: "Islas de la Bahía",
       categoria: "Cultura",
@@ -189,7 +189,7 @@ const Home = ({ navigation }) => {
           >
             <View style={styles.experienceCard}>
               <View style={styles.experienceText}>
-                <Text style={styles.experiencePrice}>Desde ${exp.precio}</Text>
+                <Text style={styles.experiencePrice}>Desde L.{exp.precio}</Text>
                 <Text style={styles.experienceTitle}>{exp.nombre}</Text>
                 <Text style={styles.experienceDescription}>{exp.descripcion}</Text>
                 <Text style={styles.experienceLocation}>{exp.ubicacion}</Text>
@@ -240,7 +240,6 @@ const Home = ({ navigation }) => {
               gallery: [
                 require("../assets/caribehondureño.jpg"),
                 require("../assets/utila.jpg"),
-                require("../assets/roatan.jpg")
               ]
             },
             {

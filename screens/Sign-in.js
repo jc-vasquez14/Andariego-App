@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -9,38 +9,63 @@ import {
   StatusBar,
   ScrollView,
   Image,
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({ navigation }) => {
   const [formData, setFormData] = useState({
-    correoElectronico: '',
-    contraseña: '',
+    correoElectronico: "",
+    contraseña: "",
   });
 
   const handleInputChange = (field, value) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [field]: value,
     }));
   };
 
-  const handleLogin = () => {
-    // Aquí implementarías la lógica de inicio de sesión
-    console.log('Iniciando sesión:', formData);
-    navigation.navigate('MainTabs')
+  const handleLogin = async () => {
+    if (!isFormValid()) return;
+
+    try {
+      const response = await fetch("http://192.168.0.15:3001/usuarios/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.correoElectronico,
+          password: formData.contraseña,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Si la respuesta es exitosa, navega a la pantalla principal
+        console.log("Usuario autenticado:", data);
+        navigation.navigate("MainTabs"); // Redirige a la pantalla de la app principal
+      } else {
+        // Si hay un error en la autenticación
+        alert("Error de inicio de sesión: " + data.error);
+      }
+    } catch (error) {
+      console.error("Error al conectarse con la API:", error);
+      alert("Error de red. Intenta nuevamente.");
+    }
   };
 
   const handleGoBack = () => {
     // Aquí implementarías la navegación hacia atrás
-    console.log('Volver atrás');
-    navigation.navigate('Login')
+    console.log("Volver atrás");
+    navigation.navigate("Landing");
   };
 
   const handleRegister = () => {
     // Aquí implementarías la navegación al registro
-    console.log('Ir a registro');
-    navigation.navigate("SignUp")
+    console.log("Ir a registro");
+    navigation.navigate("SignUp");
   };
 
   const isFormValid = () => {
@@ -50,7 +75,7 @@ const LoginScreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
-      
+
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={handleGoBack} style={styles.backButton}>
@@ -62,7 +87,7 @@ const LoginScreen = ({navigation}) => {
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Logo */}
-        <View style={{alignItems: "center"}}>
+        <View style={{ alignItems: "center" }}>
           <Image
             style={styles.logo}
             resizeMode="contain"
@@ -79,7 +104,9 @@ const LoginScreen = ({navigation}) => {
             keyboardType="email-address"
             autoCapitalize="none"
             value={formData.correoElectronico}
-            onChangeText={(value) => handleInputChange('correoElectronico', value)}
+            onChangeText={(value) =>
+              handleInputChange("correoElectronico", value)
+            }
           />
 
           <TextInput
@@ -88,7 +115,7 @@ const LoginScreen = ({navigation}) => {
             placeholderTextColor="#999"
             secureTextEntry
             value={formData.contraseña}
-            onChangeText={(value) => handleInputChange('contraseña', value)}
+            onChangeText={(value) => handleInputChange("contraseña", value)}
           />
         </View>
       </ScrollView>
@@ -98,7 +125,7 @@ const LoginScreen = ({navigation}) => {
         <TouchableOpacity
           style={[
             styles.loginButton,
-            !isFormValid() && styles.loginButtonDisabled
+            !isFormValid() && styles.loginButtonDisabled,
           ]}
           onPress={handleLogin}
           disabled={!isFormValid()}
@@ -109,7 +136,8 @@ const LoginScreen = ({navigation}) => {
         {/* Register Link */}
         <TouchableOpacity onPress={handleRegister} style={styles.registerLink}>
           <Text style={styles.registerText}>
-            ¿Aún no tienes una cuenta? <Text style={styles.registerTextBold}>Regístrate</Text>
+            ¿Aún no tienes una cuenta?{" "}
+            <Text style={styles.registerTextBold}>Regístrate</Text>
           </Text>
         </TouchableOpacity>
       </View>
@@ -120,24 +148,24 @@ const LoginScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 20,
     paddingVertical: 15,
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    borderBottomColor: "#f0f0f0",
   },
   backButton: {
     padding: 5,
   },
   headerTitle: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#000',
+    fontWeight: "600",
+    color: "#000",
   },
   placeholder: {
     width: 34,
@@ -155,13 +183,13 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   input: {
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#f5f5f5",
     borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 16,
     fontSize: 16,
     marginBottom: 16,
-    color: '#000',
+    color: "#000",
   },
   buttonContainer: {
     paddingHorizontal: 20,
@@ -169,30 +197,30 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   loginButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: "#4CAF50",
     borderRadius: 25,
     paddingVertical: 16,
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 20,
   },
   loginButtonDisabled: {
-    backgroundColor: '#cccccc',
+    backgroundColor: "#cccccc",
   },
   loginButtonText: {
-    color: '#ffffff',
+    color: "#ffffff",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   registerLink: {
-    alignItems: 'center',
+    alignItems: "center",
   },
   registerText: {
     fontSize: 14,
-    color: '#666',
+    color: "#666",
   },
   registerTextBold: {
-    fontWeight: '600',
-    color: '#4CAF50',
+    fontWeight: "600",
+    color: "#4CAF50",
   },
 });
 

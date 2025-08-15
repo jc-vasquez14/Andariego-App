@@ -49,7 +49,7 @@ const Landing = ({ navigation }) => {
           resizeMode="contain"
         />
         <View style={styles.headerButtons}>
-          <TouchableOpacity style={styles.headerButton} onPress={() => navigation.navigate('Login')}>
+          <TouchableOpacity style={styles.headerButton} onPress={() => navigation.navigate('SignIn')}>
             <Text style={styles.headerButtonText}>Iniciar Sesión</Text>
           </TouchableOpacity>
           <TouchableOpacity

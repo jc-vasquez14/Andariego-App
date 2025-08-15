@@ -49,12 +49,12 @@ const Landing = ({ navigation }) => {
           resizeMode="contain"
         />
         <View style={styles.headerButtons}>
-          <TouchableOpacity style={styles.headerButton} onPress={() => navigation.navigate('Login')}>
+          <TouchableOpacity style={styles.headerButton} onPress={() => navigation.navigate('SignIn')}>
             <Text style={styles.headerButtonText}>Iniciar Sesión</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.headerButton, styles.registerButton]}
-            onPress={() => navigation.navigate('Register')}
+            onPress={() => navigation.navigate('SignUp')}
           >
             <Text style={[styles.headerButtonText, styles.registerButtonText]}>Registrarse</Text>
           </TouchableOpacity>
@@ -73,7 +73,7 @@ const Landing = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.mainButton}
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.navigate('SignIn')}
         >
           <Text style={styles.mainButtonText}>Comenzar</Text>
         </TouchableOpacity>

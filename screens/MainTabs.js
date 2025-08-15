@@ -5,6 +5,7 @@ import Home from '../screens/Home';
 import Account from '../screens/Account';
 import Itinerary from '../screens/Itinerary';
 import Probar from '../screens/Probar';
+import Chat from '../screens/Home';
 
 const Tab = createBottomTabNavigator();
 
@@ -24,7 +25,7 @@ export default function MainTabs() {
             iconName = "map-outline";
           } else if (route.name === "Account") {
             iconName = "person-outline";
-          } else if (route.name === "Probar") {
+          } else if (route.name === "Chat") {
             iconName = "chatbubble-ellipses-outline";
           }
 
@@ -35,8 +36,8 @@ export default function MainTabs() {
       
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Itinerary" component={Itinerary} />
+      <Tab.Screen name="Chat" component={Chat} /> 
       <Tab.Screen name="Account" component={Account} />
-      <Tab.Screen name="Probar" component={Probar} /> 
     </Tab.Navigator>
   );
 }

@@ -12,13 +12,14 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-const RegistrationScreen = ({navigation}) => {
+const RegistrationScreen = ({ navigation }) => {
   const [formData, setFormData] = useState({
     nombre: "",
     apellido: "",
     correoElectronico: "",
     contraseña: "",
     confirmarContraseña: "",
+    telefono: "",
   });
   const [acceptTerms, setAcceptTerms] = useState(false);
 
@@ -29,16 +30,47 @@ const RegistrationScreen = ({navigation}) => {
     }));
   };
 
-  const handleRegister = () => {
-    // Aquí implementarías la lógica de registro
-    console.log("Registrando usuario:", formData);
-    navigation.navigate("CulturalInterests")
+  const handleRegister = async () => {
+    if (!isFormValid()) return;
+
+    try {
+      const response = await fetch(
+        "http://192.168.0.15:3001/usuarios/agregarUsuario/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.correoElectronico,
+            nombre: formData.nombre,
+            apellido: formData.apellido,
+            password: formData.contraseña,
+            telefono: formData.telefono, // Asegúrate de tener este campo en el formulario si es necesario
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Si la respuesta es exitosa, navega a la pantalla de intereses culturales
+        console.log("Usuario registrado:", data);
+        navigation.navigate("CulturalInterests"); // Redirige a la pantalla de intereses culturales
+      } else {
+        // Si hay un error en el registro
+        alert("Error al registrarse: " + data.error);
+      }
+    } catch (error) {
+      console.error("Error al conectarse con la API:", error);
+      alert("Error de red. Intenta nuevamente.");
+    }
   };
 
   const handleGoBack = () => {
     // Aquí implementarías la navegación hacia atrás
     console.log("Volver atrás");
-    navigation.goBack();
+    navigation.navigate("Landing");
   };
 
   const isFormValid = () => {
@@ -67,7 +99,7 @@ const RegistrationScreen = ({navigation}) => {
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Logo */}
-        <View style={{alignItems: "center"}}>
+        <View style={{ alignItems: "center" }}>
           <Image
             style={styles.logo}
             resizeMode="contain"
@@ -102,6 +134,17 @@ const RegistrationScreen = ({navigation}) => {
             value={formData.correoElectronico}
             onChangeText={(value) =>
               handleInputChange("correoElectronico", value)
+            }
+          />
+
+          <TextInput
+            style={styles.input}
+            placeholder="Telefono"
+            placeholderTextColor="#999"
+            keyboardType="numeric"
+            value={formData.telefono}
+            onChangeText={(value) =>
+              handleInputChange("telefono", value)
             }
           />
 
