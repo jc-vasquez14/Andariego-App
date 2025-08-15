@@ -1,231 +1,198 @@
 import React, { useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Modal, Button } from 'react-native';
+import { Calendar } from 'react-native-calendars';
 
-const fechasDisponibles = [
-  '2025-08-15',
-  '2025-08-16',
-  '2025-08-17',
-  '2025-08-18',
-];
+const Reservas = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
-const Itinerarios = () => {
-  const [selectedDate, setSelectedDate] = useState('');
-
-  const actividades = [
+  const actividadesPlanificadas = [
     {
       id: 1,
-      nombre: 'Tour en La Tigra',
-      imagen: require('../assets/Latigra.jpg'),
-      fecha: '2025-08-15',
+      titulo: 'Tour de Plantaciones de Café',
+      hora: '9:00AM - 12:00PM',
+      imagen: require('../assets/cafe.jpg'),
+      descripcion: 'Recorrido por las plantaciones de café con degustación incluida.',
     },
     {
       id: 2,
-      nombre: 'Visita a Utila',
-      imagen: require('../assets/utila.jpg'),
-      fecha: '2025-08-16',
+      titulo: 'Almuerzo en un Restaurante',
+      hora: '1:00PM - 2:00PM',
+      imagen: require('../assets/restaurante.png'),
+      descripcion: 'Disfruta de la gastronomía local en un restaurante tradicional.',
     },
     {
       id: 3,
-      nombre: 'Cascada Pulhapanzak',
-      imagen: require('../assets/pulhapanzak.jpg'),
-      fecha: '2025-08-17',
+      titulo: 'Visita al Mercado de Artesanos',
+      hora: '3:00PM - 5:00PM',
+      imagen: require('../assets/artesanos.jpg'),
+      descripcion: 'Explora y compra artesanías hechas a mano por artistas locales.',
     },
   ];
 
-  const eventos = [
+  const eventosCercanos = [
     {
       id: 1,
-      nombre: 'Festival Cultural',
-      imagen: require('../assets/festival.jpg'),
-      descripcion: 'Evento con música, gastronomía y artesanía local.',
-      fecha: '2025-08-15',
+      titulo: 'Festival Garífuna',
+      fecha: '12-14 de Octubre',
+      imagen: require('../assets/garifuna.jpg'),
+      descripcion: 'Celebra la cultura Garífuna con música, danza y gastronomía típica.',
     },
     {
       id: 2,
-      nombre: 'Mercado Artesanal',
-      imagen: require('../assets/mercado.jpg'),
-      descripcion: 'Venta de productos típicos y artesanales.',
-      fecha: '2025-08-18',
+      titulo: 'Feria de Artesanías Locales',
+      fecha: '15 de Octubre',
+      imagen: require('../assets/feria.jpg'),
+      descripcion: 'Una feria que reúne a los mejores artesanos de la región.',
     },
   ];
 
-  // Filtrar actividades según fecha seleccionada
-  const actividadesFiltradas = selectedDate
-    ? actividades.filter(act => act.fecha === selectedDate)
-    : actividades;
+  const abrirModal = (item) => {
+    setSelectedItem(item);
+    setModalVisible(true);
+  };
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <Text style={styles.title}>Itinerarios y Eventos</Text>
-
-      {/* Selector de fechas simple */}
-      <View style={styles.dateSelector}>
-        {fechasDisponibles.map(fecha => (
-          <TouchableOpacity
-            key={fecha}
-            style={[
-              styles.dateButton,
-              selectedDate === fecha && styles.dateButtonSelected,
-            ]}
-            onPress={() => setSelectedDate(fecha)}
-          >
-            <Text
-              style={[
-                styles.dateButtonText,
-                selectedDate === fecha && styles.dateButtonTextSelected,
-              ]}
-            >
-              {fecha}
-            </Text>
-          </TouchableOpacity>
-        ))}
-        <TouchableOpacity
-          style={styles.clearButton}
-          onPress={() => setSelectedDate('')}
-        >
-          <Text style={styles.clearButtonText}>Limpiar</Text>
-        </TouchableOpacity>
+    <ScrollView style={styles.container}>
+      {/* Encabezado con logo */}
+      <View style={styles.header}>
+        <Image
+          source={require('../assets/LogoPrincipal Sin Letras.png')} // Ajusta la ruta si está en otro lugar
+          style={styles.headerLogo}
+        />
+        <Text style={styles.headerTitle}>Itinerario</Text>
       </View>
 
-      {/* Actividades planificadas */}
-      <Text style={styles.sectionTitle}>Actividades planificadas</Text>
-      {actividadesFiltradas.length === 0 && (
-        <Text style={styles.noDataText}>No hay actividades para esta fecha.</Text>
-      )}
-      {actividadesFiltradas.map(act => (
-        <View key={act.id} style={styles.itemRow}>
-          <Image source={act.imagen} style={styles.itemImage} />
-          <Text style={styles.itemText}>{act.nombre}</Text>
-        </View>
+      <Calendar
+        monthFormat={'MMMM yyyy'}
+        hideExtraDays={true}
+        markedDates={{
+          '2024-10-14': { selected: true, marked: true, selectedColor: '#4CAF50' },
+        }}
+      />
+
+      <Text style={styles.sectionTitle}>Actividades Planificadas</Text>
+      {actividadesPlanificadas.map(item => (
+        <TouchableOpacity key={item.id} style={styles.card} onPress={() => abrirModal(item)}>
+          <Image source={item.imagen} style={styles.image} />
+          <View>
+            <Text style={styles.cardTitle}>{item.titulo}</Text>
+            <Text style={styles.cardSubtitle}>{item.hora}</Text>
+          </View>
+        </TouchableOpacity>
       ))}
 
-      {/* Eventos cercanos */}
-      <Text style={styles.sectionTitle}>Eventos cercanos</Text>
-      {eventos.map(evento => (
-        <View key={evento.id} style={styles.eventCard}>
-          <Image source={evento.imagen} style={styles.eventImage} />
-          <View style={styles.eventInfo}>
-            <Text style={styles.eventName}>{evento.nombre}</Text>
-            <Text style={styles.eventDesc}>{evento.descripcion}</Text>
-            <Text style={styles.eventDate}>Fecha: {evento.fecha}</Text>
+      <Text style={styles.sectionTitle}>Eventos Cercanos</Text>
+      {eventosCercanos.map(item => (
+        <TouchableOpacity key={item.id} style={styles.card} onPress={() => abrirModal(item)}>
+          <Image source={item.imagen} style={styles.image} />
+          <View>
+            <Text style={styles.cardTitle}>{item.titulo}</Text>
+            <Text style={styles.cardSubtitle}>{item.fecha}</Text>
           </View>
-        </View>
+        </TouchableOpacity>
       ))}
+
+      {/* Modal de Detalles */}
+      {selectedItem && (
+        <Modal visible={modalVisible} animationType="slide" transparent={true}>
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContainer}>
+              <Image source={selectedItem.imagen} style={styles.modalImage} />
+              <Text style={styles.modalTitle}>{selectedItem.titulo}</Text>
+              <Text style={styles.modalDesc}>{selectedItem.descripcion}</Text>
+              <Button title="Cerrar" onPress={() => setModalVisible(false)} />
+            </View>
+          </View>
+        </Modal>
+      )}
     </ScrollView>
   );
 };
 
-export default Itinerarios;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 16,
     backgroundColor: '#fff',
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#000',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  dateSelector: {
+  header: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginBottom: 25,
-    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F0F0F0',
+    paddingVertical: 12,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+    borderRadius: 8,
   },
-  dateButton: {
-    backgroundColor: '#eee',
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    borderRadius: 6,
-    margin: 5,
+  headerLogo: {
+    width: 35,
+    height: 35,
+    marginRight: 10,
+    borderRadius: 5,
   },
-  dateButtonSelected: {
-    backgroundColor: '#4CAF50',
-  },
-  dateButtonText: {
-    color: '#333',
-    fontWeight: '500',
-  },
-  dateButtonTextSelected: {
-    color: '#fff',
-  },
-  clearButton: {
-    backgroundColor: '#ccc',
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    borderRadius: 6,
-    margin: 5,
-  },
-  clearButtonText: {
-    color: '#000',
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'black',
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 15,
-    color: '#333',
+    fontWeight: 'bold',
+    marginVertical: 12,
   },
-  noDataText: {
-    fontSize: 14,
-    color: '#888',
-    marginBottom: 15,
-    fontStyle: 'italic',
-    textAlign: 'center',
-  },
-  itemRow: {
+  card: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 15,
-  },
-  itemImage: {
-    width: 80,
-    height: 60,
+    marginBottom: 12,
+    backgroundColor: '#f9f9f9',
     borderRadius: 8,
-    marginRight: 15,
-  },
-  itemText: {
-    fontSize: 16,
-    color: '#000',
-  },
-  eventCard: {
-    flexDirection: 'row',
-    marginBottom: 20,
-    backgroundColor: '#f7f7f7',
-    borderRadius: 10,
     overflow: 'hidden',
-    elevation: 1,
+    padding: 8,
   },
-  eventImage: {
-    width: 100,
-    height: 100,
+  image: {
+    width: 70,
+    height: 70,
+    marginRight: 10,
+    borderRadius: 5,
   },
-  eventInfo: {
-    flex: 1,
-    padding: 10,
-  },
-  eventName: {
+  cardTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 5,
   },
-  eventDesc: {
+  cardSubtitle: {
     fontSize: 14,
-    color: '#555',
-    marginBottom: 8,
+    color: '#666',
   },
-  eventDate: {
-    fontSize: 12,
-    color: '#999',
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 20,
+    width: '85%',
+    alignItems: 'center',
+  },
+  modalImage: {
+    width: 200,
+    height: 150,
+    borderRadius: 10,
+    marginBottom: 15,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  modalDesc: {
+    fontSize: 15,
+    color: '#555',
+    textAlign: 'center',
+    marginBottom: 15,
   },
 });
+
+export default Reservas;

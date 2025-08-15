@@ -32,7 +32,9 @@ export default function Login({ navigation }) {
         source={require("../assets/Depth 2, Frame 0.png")}
       />
       <View style={[loginStyles.cntBtn, loginStyles.DivDesc]}>
-        <Text style={loginStyles.TxtBold}>Bienvenido a AndarieGo</Text>
+        <Text style={[loginStyles.TxtBold, { textAlign: "center" }]}>
+          Bienvenido a AndarieGo
+        </Text>
         <Text style={loginStyles.TxtDesc}>
           Descubra el corazón de Honduras a través de auténticas experiencias
           culturales.
