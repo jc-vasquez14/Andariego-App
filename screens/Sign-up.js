@@ -9,6 +9,8 @@ import {
   StatusBar,
   ScrollView,
   Image,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -46,7 +48,7 @@ const RegistrationScreen = ({ navigation }) => {
             nombre: formData.nombre,
             apellido: formData.apellido,
             password: formData.contraseña,
-            telefono: formData.telefono, // Asegúrate de tener este campo en el formulario si es necesario
+            telefono: formData.telefono,
           }),
         }
       );
@@ -54,11 +56,9 @@ const RegistrationScreen = ({ navigation }) => {
       const data = await response.json();
 
       if (response.ok) {
-        // Si la respuesta es exitosa, navega a la pantalla de intereses culturales
         console.log("Usuario registrado:", data);
-        navigation.navigate("CulturalInterests"); // Redirige a la pantalla de intereses culturales
+        navigation.navigate("CulturalInterests"); 
       } else {
-        // Si hay un error en el registro
         alert("Error al registrarse: " + data.error);
       }
     } catch (error) {
@@ -68,8 +68,6 @@ const RegistrationScreen = ({ navigation }) => {
   };
 
   const handleGoBack = () => {
-    // Aquí implementarías la navegación hacia atrás
-    console.log("Volver atrás");
     navigation.navigate("Landing");
   };
 
@@ -87,119 +85,125 @@ const RegistrationScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
-
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={handleGoBack} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={24} color="#000" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Registrate</Text>
-        <View style={styles.placeholder} />
-      </View>
-
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        {/* Logo */}
-        <View style={{ alignItems: "center" }}>
-          <Image
-            style={styles.logo}
-            resizeMode="contain"
-            source={require("../assets/LogoAlternativo.png")}
-          />
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        {/* Header */}
+        <View style={styles.header}>
+          <TouchableOpacity onPress={handleGoBack} style={styles.backButton}>
+            <Ionicons name="arrow-back" size={24} color="#000" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Regístrate</Text>
+          <View style={styles.placeholder} />
         </View>
 
-        {/* Form */}
-        <View style={styles.form}>
-          <TextInput
-            style={styles.input}
-            placeholder="Nombre"
-            placeholderTextColor="#999"
-            value={formData.nombre}
-            onChangeText={(value) => handleInputChange("nombre", value)}
-          />
+        <ScrollView
+          style={styles.content}
+          contentContainerStyle={{ paddingBottom: 40 }}
+          showsVerticalScrollIndicator={false}
+        >
+          {/* Logo */}
+          <View style={{ alignItems: "center" }}>
+            <Image
+              style={styles.logo}
+              resizeMode="contain"
+              source={require("../assets/LogoAlternativo.png")}
+            />
+          </View>
 
-          <TextInput
-            style={styles.input}
-            placeholder="Apellido"
-            placeholderTextColor="#999"
-            value={formData.apellido}
-            onChangeText={(value) => handleInputChange("apellido", value)}
-          />
+          {/* Form */}
+          <View style={styles.form}>
+            <TextInput
+              style={styles.input}
+              placeholder="Nombre"
+              placeholderTextColor="#999"
+              value={formData.nombre}
+              onChangeText={(value) => handleInputChange("nombre", value)}
+            />
 
-          <TextInput
-            style={styles.input}
-            placeholder="Correo Electrónico"
-            placeholderTextColor="#999"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            value={formData.correoElectronico}
-            onChangeText={(value) =>
-              handleInputChange("correoElectronico", value)
-            }
-          />
+            <TextInput
+              style={styles.input}
+              placeholder="Apellido"
+              placeholderTextColor="#999"
+              value={formData.apellido}
+              onChangeText={(value) => handleInputChange("apellido", value)}
+            />
 
-          <TextInput
-            style={styles.input}
-            placeholder="Telefono"
-            placeholderTextColor="#999"
-            keyboardType="numeric"
-            value={formData.telefono}
-            onChangeText={(value) =>
-              handleInputChange("telefono", value)
-            }
-          />
+            <TextInput
+              style={styles.input}
+              placeholder="Correo Electrónico"
+              placeholderTextColor="#999"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              value={formData.correoElectronico}
+              onChangeText={(value) =>
+                handleInputChange("correoElectronico", value)
+              }
+            />
 
-          <TextInput
-            style={styles.input}
-            placeholder="Contraseña"
-            placeholderTextColor="#999"
-            secureTextEntry
-            value={formData.contraseña}
-            onChangeText={(value) => handleInputChange("contraseña", value)}
-          />
+            <TextInput
+              style={styles.input}
+              placeholder="Teléfono"
+              placeholderTextColor="#999"
+              keyboardType="numeric"
+              value={formData.telefono}
+              onChangeText={(value) => handleInputChange("telefono", value)}
+            />
 
-          <TextInput
-            style={styles.input}
-            placeholder="Confirmar Contraseña"
-            placeholderTextColor="#999"
-            secureTextEntry
-            value={formData.confirmarContraseña}
-            onChangeText={(value) =>
-              handleInputChange("confirmarContraseña", value)
-            }
-          />
+            <TextInput
+              style={styles.input}
+              placeholder="Contraseña"
+              placeholderTextColor="#999"
+              secureTextEntry
+              value={formData.contraseña}
+              onChangeText={(value) => handleInputChange("contraseña", value)}
+            />
 
-          {/* Terms and Conditions */}
-          <TouchableOpacity
-            style={styles.termsContainer}
-            onPress={() => setAcceptTerms(!acceptTerms)}
-          >
-            <View
-              style={[styles.checkbox, acceptTerms && styles.checkboxChecked]}
+            <TextInput
+              style={styles.input}
+              placeholder="Confirmar Contraseña"
+              placeholderTextColor="#999"
+              secureTextEntry
+              value={formData.confirmarContraseña}
+              onChangeText={(value) =>
+                handleInputChange("confirmarContraseña", value)
+              }
+            />
+
+            {/* Terms and Conditions */}
+            <TouchableOpacity
+              style={styles.termsContainer}
+              onPress={() => setAcceptTerms(!acceptTerms)}
             >
-              {acceptTerms && (
-                <Ionicons name="checkmark" size={16} color="#fff" />
-              )}
-            </View>
-            <Text style={styles.termsText}>
-              Acepto los Términos de Servicio y la Política de Privacidad
-            </Text>
+              <View
+                style={[styles.checkbox, acceptTerms && styles.checkboxChecked]}
+              >
+                {acceptTerms && (
+                  <Ionicons name="checkmark" size={16} color="#fff" />
+                )}
+              </View>
+              <Text style={styles.termsText}>
+                Acepto los Términos de Servicio y la Política de Privacidad
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+
+        {/* Register Button */}
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={[
+              styles.registerButton,
+              !isFormValid() && styles.registerButtonDisabled,
+            ]}
+            onPress={handleRegister}
+            disabled={!isFormValid()}
+          >
+            <Text style={styles.registerButtonText}>Registrarme</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
-
-      {/* Register Button */}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[
-            styles.registerButton,
-            !isFormValid() && styles.registerButtonDisabled,
-          ]}
-          onPress={handleRegister}
-          disabled={!isFormValid()}
-        >
-          <Text style={styles.registerButtonText}>Registrarme</Text>
-        </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -236,6 +240,7 @@ const styles = StyleSheet.create({
   logo: {
     height: 150,
     width: 150,
+    marginVertical: 30,
   },
   form: {
     marginBottom: 20,

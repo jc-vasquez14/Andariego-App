@@ -15,6 +15,7 @@ import Capacitaciones from "./screens/Capacitaciones"; // Nombre exacto del arch
 import reservacion from "./screens/reservacion";
 import chat from "./screens/chat";
 import Landing from "./screens/Landing";
+import MainTabsAnfitrion from "./screens/MainTabsAnfitrion";
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,7 @@ export default function App() {
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="MainTabs" component={MainTabs} />
+        <Stack.Screen name="MainTabsAnfitrion" component={MainTabsAnfitrion} />
         <Stack.Screen
           name="CulturalInterests"
           component={CulturalInterestsScreen}

@@ -36,7 +36,7 @@ export default function MainTabs() {
       
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Itinerary" component={Itinerary} />
-      <Tab.Screen name="Chat" component={Chat} /> 
+      {/*<Tab.Screen name="Chat" component={Chat} /> */}
       <Tab.Screen name="Account" component={Account} />
     </Tab.Navigator>
   );

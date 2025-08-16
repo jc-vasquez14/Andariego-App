@@ -52,11 +52,6 @@ const BecomeHost = ({ navigation }) => {
         </View>
       </View>
 
-      {/* Botón */}
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CrearExperiencia')}>
-        <Text style={styles.buttonText}>Conviértete en Anfitrión</Text>
-      </TouchableOpacity>
-
       {/* Contacto */}
       <Text style={styles.contactText}>
         Para consultas, contáctanos en anfitrion@andariego.com

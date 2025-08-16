@@ -1,34 +1,35 @@
-import React from 'react';
+import React from "react";
 import {
   StyleSheet,
   Text,
   View,
   Image,
   ScrollView,
-} from 'react-native';
+  TouchableOpacity,
+} from "react-native";
 
-const Account = () => {
+const Account = ({ navigation }) => {
   // Datos simulados del usuario
   const user = {
-    nombre: 'Marío López',
-    email: 'mario.lopez@example.com',
-    telefono: '+504 1234-5678',
-    imagenPerfil: require('../assets/perfil.jpg'),
+    nombre: "Joel Carcamo",
+    email: "joel_carcamo@host.hn",
+    telefono: "+504 1234-5678",
+    imagenPerfil: require("../assets/silueta.png"),
   };
 
   // Experiencias realizadas
   const experienciasRealizadas = [
     {
       id: 1,
-      nombre: 'La Tigra',
-      fecha: '2025-07-10',
-      imagen: require('../assets/Latigra.jpg'),
+      nombre: "La Tigra",
+      fecha: "2025-07-10",
+      imagen: require("../assets/Latigra.jpg"),
     },
     {
       id: 2,
-      nombre: 'Pulhapanzak',
-      fecha: '2025-06-22',
-      imagen: require('../assets/pulhapanzak.jpg'),
+      nombre: "Pulhapanzak",
+      fecha: "2025-06-22",
+      imagen: require("../assets/pulhapanzak.jpg"),
     },
   ];
 
@@ -45,7 +46,7 @@ const Account = () => {
       {/* Experiencias realizadas */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Experiencias realizadas</Text>
-        {experienciasRealizadas.map(exp => (
+        {experienciasRealizadas.map((exp) => (
           <View key={exp.id} style={styles.experienceCard}>
             <Image source={exp.imagen} style={styles.experienceImage} />
             <View style={styles.experienceInfo}>
@@ -54,6 +55,14 @@ const Account = () => {
             </View>
           </View>
         ))}
+      </View>
+      <View style={styles.viewAnfitrion}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("Capacitaciones")}
+        >
+          <Text style={styles.buttonText}>Quiero ser Anfitrion</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -64,11 +73,11 @@ export default Account;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f7f8fa',
+    backgroundColor: "#f7f8fa",
   },
   header: {
-    backgroundColor: '#4CAF50',
-    alignItems: 'center',
+    backgroundColor: "#4CAF50",
+    alignItems: "center",
     paddingVertical: 30,
     paddingHorizontal: 20,
     borderBottomLeftRadius: 20,
@@ -81,21 +90,21 @@ const styles = StyleSheet.create({
     borderRadius: 55,
     marginBottom: 12,
     borderWidth: 3,
-    borderColor: '#fff',
+    borderColor: "#fff",
   },
   profileName: {
     fontSize: 22,
-    fontWeight: 'bold',
-    color: '#fff',
+    fontWeight: "bold",
+    color: "#fff",
   },
   profileEmail: {
     fontSize: 16,
-    color: '#e8f5e9',
+    color: "#e8f5e9",
     marginTop: 4,
   },
   profilePhone: {
     fontSize: 16,
-    color: '#e8f5e9',
+    color: "#e8f5e9",
     marginTop: 2,
   },
   section: {
@@ -103,17 +112,17 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 20,
-    fontWeight: '600',
+    fontWeight: "600",
     marginBottom: 15,
-    color: '#333',
+    color: "#333",
   },
   experienceCard: {
-    flexDirection: 'row',
-    backgroundColor: '#fff',
+    flexDirection: "row",
+    backgroundColor: "#fff",
     borderRadius: 12,
     marginBottom: 15,
     padding: 10,
-    alignItems: 'center',
+    alignItems: "center",
     elevation: 3,
   },
   experienceImage: {
@@ -127,12 +136,25 @@ const styles = StyleSheet.create({
   },
   experienceName: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#000',
+    fontWeight: "600",
+    color: "#000",
   },
   experienceDate: {
     fontSize: 14,
-    color: '#777',
+    color: "#777",
     marginTop: 4,
   },
+  button: {
+    backgroundColor: "#00B04F",
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 10,
+    marginBottom: 0,
+    alignItems: "center",
+    width: 300,
+  },
+  buttonText: { color: "#fff", fontWeight: "bold", fontSize: 16 },
+  viewAnfitrion: {
+    alignItems: "center"
+  }
 });

@@ -176,7 +176,7 @@ const Home = ({ navigation }) => {
                   descripcion: exp.descripcion,
                   ubicacion: exp.ubicacion,
                   duracion: "3 horas",
-                  anfitrion: { nombre: "Juan Pérez", imagen: require("../assets/guia1.jpg") },
+                  anfitrion: { nombre: "Maria Briseño", imagen: require("../assets/silueta.png") },
                   imagen: exp.imagen,
                   gallery: [
                     require("../assets/Latigra.jpg"),

@@ -9,6 +9,10 @@ import {
   StatusBar,
   ScrollView,
   Image,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -43,11 +47,9 @@ const LoginScreen = ({ navigation }) => {
       const data = await response.json();
 
       if (response.ok) {
-        // Si la respuesta es exitosa, navega a la pantalla principal
         console.log("Usuario autenticado:", data);
-        navigation.navigate("MainTabs"); // Redirige a la pantalla de la app principal
+        navigation.navigate("MainTabs");
       } else {
-        // Si hay un error en la autenticación
         alert("Error de inicio de sesión: " + data.error);
       }
     } catch (error) {
@@ -57,13 +59,11 @@ const LoginScreen = ({ navigation }) => {
   };
 
   const handleGoBack = () => {
-    // Aquí implementarías la navegación hacia atrás
     console.log("Volver atrás");
     navigation.navigate("Landing");
   };
 
   const handleRegister = () => {
-    // Aquí implementarías la navegación al registro
     console.log("Ir a registro");
     navigation.navigate("SignUp");
   };
@@ -76,71 +76,86 @@ const LoginScreen = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
 
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={handleGoBack} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={24} color="#000" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Inicia Sesión</Text>
-        <View style={styles.placeholder} />
-      </View>
-
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        {/* Logo */}
-        <View style={{ alignItems: "center" }}>
-          <Image
-            style={styles.logo}
-            resizeMode="contain"
-            source={require("../assets/LogoPrincipal Sin Letras.png")}
-          />
-        </View>
-
-        {/* Form */}
-        <View style={styles.form}>
-          <TextInput
-            style={styles.input}
-            placeholder="Correo Electrónico"
-            placeholderTextColor="#999"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            value={formData.correoElectronico}
-            onChangeText={(value) =>
-              handleInputChange("correoElectronico", value)
-            }
-          />
-
-          <TextInput
-            style={styles.input}
-            placeholder="Contraseña"
-            placeholderTextColor="#999"
-            secureTextEntry
-            value={formData.contraseña}
-            onChangeText={(value) => handleInputChange("contraseña", value)}
-          />
-        </View>
-      </ScrollView>
-
-      {/* Login Button */}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[
-            styles.loginButton,
-            !isFormValid() && styles.loginButtonDisabled,
-          ]}
-          onPress={handleLogin}
-          disabled={!isFormValid()}
+      {/* Para cerrar teclado al tocar afuera */}
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <Text style={styles.loginButtonText}>Iniciar Sesión</Text>
-        </TouchableOpacity>
+          {/* Header */}
+          <View style={styles.header}>
+            <TouchableOpacity onPress={handleGoBack} style={styles.backButton}>
+              <Ionicons name="arrow-back" size={24} color="#000" />
+            </TouchableOpacity>
+            <Text style={styles.headerTitle}>Inicia Sesión</Text>
+            <View style={styles.placeholder} />
+          </View>
 
-        {/* Register Link */}
-        <TouchableOpacity onPress={handleRegister} style={styles.registerLink}>
-          <Text style={styles.registerText}>
-            ¿Aún no tienes una cuenta?{" "}
-            <Text style={styles.registerTextBold}>Regístrate</Text>
-          </Text>
-        </TouchableOpacity>
-      </View>
+          <ScrollView
+            style={styles.content}
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
+          >
+            {/* Logo */}
+            <View style={{ alignItems: "center" }}>
+              <Image
+                style={styles.logo}
+                resizeMode="contain"
+                source={require("../assets/LogoPrincipal Sin Letras.png")}
+              />
+            </View>
+
+            {/* Form */}
+            <View style={styles.form}>
+              <TextInput
+                style={styles.input}
+                placeholder="Correo Electrónico"
+                placeholderTextColor="#999"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                value={formData.correoElectronico}
+                onChangeText={(value) =>
+                  handleInputChange("correoElectronico", value)
+                }
+              />
+
+              <TextInput
+                style={styles.input}
+                placeholder="Contraseña"
+                placeholderTextColor="#999"
+                secureTextEntry
+                value={formData.contraseña}
+                onChangeText={(value) => handleInputChange("contraseña", value)}
+              />
+            </View>
+          </ScrollView>
+
+          {/* Login Button */}
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={[
+                styles.loginButton,
+                !isFormValid() && styles.loginButtonDisabled,
+              ]}
+              onPress={handleLogin}
+              disabled={!isFormValid()}
+            >
+              <Text style={styles.loginButtonText}>Iniciar Sesión</Text>
+            </TouchableOpacity>
+
+            {/* Register Link */}
+            <TouchableOpacity
+              onPress={handleRegister}
+              style={styles.registerLink}
+            >
+              <Text style={styles.registerText}>
+                ¿Aún no tienes una cuenta?{" "}
+                <Text style={styles.registerTextBold}>Regístrate</Text>
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 };
