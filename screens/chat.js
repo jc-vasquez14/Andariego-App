@@ -35,7 +35,7 @@ export default function ChatScreen() {
 
     // Respuesta turística automática
     setTimeout(() => {
-      let reply = "¡Interesante! Cuéntame más para poder ayudarte 🗺️";
+      let reply = "Escribe 'Playa', 'Montaña' o 'Reserva' y aquí te ayudaremos.";
       if (input.toLowerCase().includes("playa")) {
         reply = "🏖️ Tenemos playas hermosas que te encantarán. ¿Te gustaría ver opciones?";
       } else if (input.toLowerCase().includes("montaña")) {
@@ -59,7 +59,7 @@ export default function ChatScreen() {
     >
       {item.sender === "bot" && (
         <Image
-          source={require("../assets/LogoPrincipal Sin Letras.png")} // Ajusta la ruta si está en otro lugar
+          source={require("../assets/silueta.png")} // Ajusta la ruta si está en otro lugar
           style={styles.avatar}
         />
       )}
@@ -80,7 +80,7 @@ export default function ChatScreen() {
       </View>
       {item.sender === "user" && (
         <Image
-          source={{ uri: "https://randomuser.me/api/portraits/men/45.jpg" }}
+          source={require("../assets/silueta.png")}
           style={styles.avatar}
         />
       )}
@@ -113,7 +113,7 @@ export default function ChatScreen() {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          placeholder="Escribe tu mensaje turístico..."
+          placeholder="Escribe tu mensaje..."
           value={input}
           onChangeText={setInput}
         />
@@ -130,19 +130,19 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#ffffff",
     paddingVertical: 12,
     paddingHorizontal: 15,
     elevation: 3,
   },
   headerLogo: { width: 35, height: 35, marginRight: 10, borderRadius: 5 },
-  headerTitle: { fontSize: 20, fontWeight: "bold", color: "#fff" },
+  headerTitle: { fontSize: 20, fontWeight: "bold", color: "#4CAF50" },
   messageContainer: {
     flexDirection: "row",
     marginBottom: 10,
     alignItems: "flex-end",
   },
-  avatar: { width: 30, height: 30, borderRadius: 15, marginHorizontal: 5 },
+  avatar: { width: 20, height: 20, borderRadius: 15, marginHorizontal: 5 },
   bubble: {
     padding: 10,
     borderRadius: 20,

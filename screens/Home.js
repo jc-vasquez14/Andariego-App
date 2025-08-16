@@ -279,7 +279,7 @@ export default Home;
 // --- ESTILOS ---
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff", padding: 20 },
-  headerLogoContainer: { alignItems: "center", marginBottom: 20 },
+  headerLogoContainer: { alignItems: "center", margin: 20 },
   headerLogo: { width: 200, height: 60 },
   searchInput: { backgroundColor: "#f0f0f0", borderRadius: 8, paddingHorizontal: 16, paddingVertical: 14, fontSize: 16, marginBottom: 20 },
   filtersContainer: { flexDirection: "row", justifyContent: "space-between", marginBottom: 30 },
